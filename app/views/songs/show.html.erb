@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+
+<%= link_to 'Back', songs_path %> |
+<%= link_to 'Edit', edit_song_path(@song) %>
+
+<h3> View Song</h3>
+
+<p>
+<table>
+  <tr>
+    <th>Song:</th>
+    <td><%= @song.id %></td>
+  </tr>
+  <tr>
+    <th>Name:</th>
+    <td><%= @song.name %></td>
+  </tr>
+  <tr>
+    <th>Album:</th>
+    <td><%= @song.album_id %></td>
+  </tr>
+  <tr>
+    <th>Length:</th>
+    <td><%= @song.length %></td>
+  </tr>
+  <tr>
+    <th>Genre:</th>
+    <td><%= @song.genre %></td>
+  </tr>
+  <tr>
+    <th>Song rank:</th>
+    <td><%= @song.favorited_by.length %></td>
+  </tr>
+  <tr>
+    <th>Added by:</th>
+    <td><%= @user.name %></td>
+  </tr>
+</table><br>
+
+  <h3>Comments</h3>
+<table>
+  <tr><th>From:</th><th>Comment:</th></tr>
+  <% @song.song_comments.each do |comment| %>
+    <tr>
+      <th><%= comment.commenter %></th>
+      <th><%= comment.body %></th>
+    </tr>
+  <% end %>
+</table>
+
+<h3>Add a comment:</h3>
+<%= form_for([@song, @song.song_comments.build]) do |f| %>
+  <p>
+    <%= f.label :commenter %>
+    <%= f.text_field :commenter %><br>
+    <%= f.label :body %>
+    <%= f.text_area :body %><br>
+    <%= f.submit %>
+  </p>
+<% end %>
+</p>
+
+
+<%= button_to "Guardar! (envia mail automatico)", { :controller => "songs", :action => "share"}, class: 'btn btn-danger' %>
+
+<% if logged_in? %>
+  <%= link_to "favorite",   favorite_song_path(iden: @song.id, type: "favorite"), method: :put %>
+  <!-- <%= link_to "unfavorite", favorite_song_path(iden: @song.id, type: "unfavorite"), method: :put %> -->
+<% end %>
+
+
+<!-- <h4>Followed by</h4>
+<ul>
+  <% for user in @song.favorited_by %>
+    <li><%=h user.name %> | <%= link_to "view", user %></li> 
+  <% end %>
+</ul> -->
+
+

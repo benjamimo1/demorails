@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @friendship.user_id %>
+</p>
+
+<p>
+  <strong>Friend:</strong>
+  <%= @friendship.friend_id %>
+</p>
+
+<p>
+  <strong>Create:</strong>
+  <%= @friendship.create %>
+</p>
+
+<p>
+  <strong>Destroy:</strong>
+  <%= @friendship.destroy %>
+</p>
+<% if logged_in? %>
+	<%= link_to 'Edit', edit_friendship_path(@friendship) %> |
+<%end%>
+<%= link_to 'Back', friendships_path %>
+

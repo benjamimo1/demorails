@@ -1,0 +1,108 @@
+<p id="notice"><%= notice %></p>
+
+<%= link_to 'Back', artists_path %><% if logged_in? and (session["user_id"] == @artist.user_id or session["user_id"] == 1)%> |
+<%= link_to 'Edit', edit_artist_path(@artist) %><%end%>
+
+<h3>View Artist</h3>
+
+<table>
+  <tr>
+    <th>Name:</th>
+    <td><%= @artist.name %></td>
+  </tr>
+  <tr>
+    <th>Description:</th>
+    <td><%= @artist.description %></td>
+  </tr>
+  <tr>
+    <th>Genre:</th>
+    <td><%= @artist.genre %></td>
+  </tr>
+  <tr>
+    <th>Origin:</th>
+    <td><%= @artist.origin %></td>
+  </tr>
+  <tr>
+    <th>Yearsactive:</th>
+    <td><%= @artist.yearsactive %></td>
+  </tr>
+  <tr>
+    <th>Members:</th>
+    <td><%= @artist.members %></td>
+  </tr>
+  <tr>
+    <th>Artist:</th>
+    <td><%= @artist.id %></td>
+  </tr>
+  <tr>
+    <th>Artist rank:</th>
+    <td><%= @artist.favorited_by.length %></td>
+  </tr>
+  <tr>
+    <th>Added by:</th>
+    <td><%= @user.name %></td>
+  </tr>
+</table><br>
+
+<h3>Albums</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Songnumber</th>
+      <th>Artist</th>
+      <th>Album</th>
+      <th>Rank</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @albums.each do |album| %>
+      <tr>
+        <td><%= album.name %></td>
+        <td><%= album.songnumber %></td>
+        <td><%= album.artist_id %></td>
+        <td><%= album.id %></td>
+        <td><%= album.favorited_by.length %></td>
+        <td><%= link_to 'Show', album %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+<h3>Comments</h3>
+<table>
+  <tr><th>From:</th><th>Comment:</th></tr>
+  <% @artist.artist_comments.each do |comment| %>
+    <tr>
+      <th><%= comment.commenter %></th>
+      <th><%= comment.body %></th>
+    </tr>
+  <% end %>
+</table>
+
+<% if logged_in? %>
+  <h3>Add a comment:</h3>
+  <%= form_for([@artist, @artist.artist_comments.build]) do |f| %>
+    <p>
+      <%= f.label :commenter %>
+      <%= f.text_field :commenter %><br>
+      <%= f.label :body %>
+      <%= f.text_area :body %><br>
+      <%= f.submit %>
+    </p>
+  <% end %>
+
+
+    <%= link_to "favorite",   favorite_artist_path(iden: @artist.id, type: "favorite"), method: :put %>
+    <!-- <%= link_to "unfavorite", favorite_artist_path(iden: @artist.id, type: "unfavorite"), method: :put %> -->
+<% end %>
+
+
+
+

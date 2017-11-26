@@ -1,0 +1,91 @@
+<p id="notice"><%= notice %></p>
+
+<%= link_to 'Back', albums_path %><% if logged_in? and (session["user_id"] == @album.user_id or session["user_id"] == 1)%> |
+<%= link_to 'Edit', edit_album_path(@album) %><%end%>
+
+<h3> View Album</h3>
+
+<table>
+  <tr>
+    <th>Name:</th>
+    <td><%= @album.name %></td>
+  </tr>
+  <tr>
+    <th>Songnumber:</th>
+    <td><%= @album.songnumber %></td>
+  </tr>
+  <tr>
+    <th>Artist:</th>
+    <td><%= @album.artist_id %></td>
+  </tr>
+  <tr>
+    <th>Album:</th>
+    <td><%= @album.id %></td>
+  </tr>
+  <tr>
+    <th>Album rank:</th>
+    <td><%= @album.favorited_by.length %></td>
+  </tr>
+  <tr>
+    <th>Added by:</th>
+    <td><%= @user.name %></td>
+  </tr>
+</table><br>
+
+<h3> Songs</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Album</th>
+      <th>Length</th>
+      <th>Genre</th>
+      <th>Rank</th>
+      <th colspan="5"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @songs.each do |song| %>
+      <tr>
+
+        <td><%= song.name %></td>
+        <td><%= song.album_id %></td>
+        <td><%= song.length %></td>
+        <td><%= song.genre %></td>
+        <td><%= song.favorited_by.length %></td>
+        <td><%= link_to 'Show', song %></td>
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+
+<h3>Comments</h3>
+<table>
+  <tr><th>From:</th><th>Comment:</th></tr>
+  <% @album.album_comments.each do |comment| %>
+    <tr>
+      <th><%= comment.commenter %></th>
+      <th><%= comment.body %></th>
+    </tr>
+  <% end %>
+</table>
+
+<% if logged_in? %>
+  <h3>Add a comment:</h3>
+  <%= form_for([@album, @album.album_comments.build]) do |f| %>
+    <p>
+      <%= f.label :commenter %>
+      <%= f.text_field :commenter %><br>
+      <%= f.label :body %>
+      <%= f.text_area :body %><br>
+      <%= f.submit %>
+    </p>
+  <% end %>
+
+
+    <%= link_to "favorite",   favorite_album_path(iden: @album.id, type: "favorite"), method: :put %>
+<% end %>

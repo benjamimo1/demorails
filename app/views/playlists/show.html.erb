@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<table>
+  <tr>
+    <th>Name:</th>
+    <td><%= @playlist.name %></td>
+  </tr>
+  <tr>
+    <th>Description:</th>
+    <td><%= @playlist.description %></td>
+  </tr>
+  <tr>
+    <th>Created by:</th>
+    <td><%= @user.name %></td>
+  </tr>
+</table><br>
+
+<h3> Songs</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Album</th>
+      <th>Length</th>
+      <th>Genre</th>
+      <th>Rank</th>
+      <th colspan="5"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @songs.each do |song| %>
+      <tr>
+
+        <td><%= song.name %></td>
+        <td><%= song.album_id %></td>
+        <td><%= song.length %></td>
+        <td><%= song.genre %></td>
+        <td><%= song.favorited_by.length %></td>
+        <td><%= link_to 'Show', song %></td>
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if logged_in? %>
+  <%= link_to "favorite",   favorite_playlist_path(iden: @playlist.id, type: "favorite"), method: :put %>
+  <!-- <%= link_to "unfavorite", favorite_playlist_path(iden: @playlist.id, type: "unfavorite"), method: :put %> -->
+  <% if session["user_id"] == @playlist.user_id or session["user_id"] == 1 %>
+  	<%= link_to 'Edit', edit_playlist_path(@playlist) %> |
+    <%= link_to 'Add Song'%>
+  <%end%>
+<%end%>
+<%= link_to 'Back', playlists_path %>

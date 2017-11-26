@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Albums</h1>
+<div class="container-fluid"><br>
+    <div class="table-responsive" id="tabla">
+      <table class="table table-bordered table-hover">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Songnumber</th>
+              <th>Artist</th>
+              <th>Album</th>
+              <th>Rank</th>
+              <th colspan="3"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @albums.each do |album| %>
+              <tr>
+                <td><%= album.name %></td>
+                <td><%= album.songnumber %></td>
+                <td><%= album.artist_id %></td>
+                <td><%= album.id %></td>
+                <td><%= album.favorited_by.length %></td>
+                <td><%= link_to 'Show', album %></td>
+                <% if logged_in? and (session["user_id"] == album.user_id or session["user_id"] == 1)%>
+                  <td><%= link_to 'Edit', edit_album_path(album) %></td>
+                  <td><%= link_to 'Destroy', album, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                <%end%>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+<br>
+<% if logged_in? %>
+  <%= link_to 'New Album', new_album_path %>
+<%end%>

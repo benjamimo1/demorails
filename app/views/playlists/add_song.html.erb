@@ -1,0 +1,15 @@
+<h1>Editing Playlist</h1>
+
+<%= form_for(@playlist) do |f| %>
+  
+  <div class="field">
+    <%= f.label :song_id %>
+    <%= f.collection_select :song_id, Song.all, :id, :name%>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', @playlist %>

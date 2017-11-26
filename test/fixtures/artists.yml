@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyText
+  genre: MyText
+  origin: MyText
+  yearsactive: MyText
+  members: MyText
+  name: MyText
+  artist_id: 1
+
+two:
+  description: MyText
+  genre: MyText
+  origin: MyText
+  yearsactive: MyText
+  members: MyText
+  name: MyText
+  artist_id: 1
